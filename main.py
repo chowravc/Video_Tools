@@ -12,7 +12,7 @@ def main(args):
 		videoToFrames(args.vDir)
 
 	# Convert frames to video
-	if args.v2f:
+	if args.f2v:
 
 		print('\nConverting frames to video')
 
@@ -32,4 +32,8 @@ if __name__ == '__main__':
 	parser.add_argument('--f2v', action='store_true', help='Flag to convert frames to video.')
 	parser.add_argument('--fDir', action='store', nargs='?', type=str, default='input/example/*.tif', help='Source frames.')
 
-	main()
+	# Parse arguments
+	args = parser.parse_args()
+
+	# Call main
+	main(args)
