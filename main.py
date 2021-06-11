@@ -16,7 +16,7 @@ def main(args):
 
 		print('\nConverting frames to video')
 
-		framesToVideo(args.fDir)
+		framesToVideo(args.fDir, args.fps)
 
 	print('\nmain.py executed successfully.')
 
@@ -27,10 +27,15 @@ if __name__ == '__main__':
 	# Arguments to convert video to frames
 	parser.add_argument('--v2f', action='store_true', help='Flag to convert video to frames.')
 	parser.add_argument('--vDir', action='store', nargs='?', type=str, default='input/example.avi', help='Source video.')
+	# Example:
+	# python main.py --v2f --vDir input/example.avi
 
 	# Arguments to converts frames to video
 	parser.add_argument('--f2v', action='store_true', help='Flag to convert frames to video.')
 	parser.add_argument('--fDir', action='store', nargs='?', type=str, default='input/example/*.tif', help='Source frames.')
+	parser.add_argument('--fps', action='store', nargs='?', type=int, default=25, help='Wanted video fps.')
+	# Example:
+	# python main.py --f2v --fDir input/example/*.tif --fps 25
 
 	# Parse arguments
 	args = parser.parse_args()
