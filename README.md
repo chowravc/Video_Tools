@@ -23,3 +23,13 @@ Video tools in python (mostly with cv2). Input your files in `/input/`. Run main
     ```
     
     Video will be outputted to `/output/<your-directory-name>.avi`.
+
+3. Select frames at equal intervals
+    
+    Input the frames inside a directory `/input/<your-directory-name>`.
+    
+    ```
+    python main.py --fSel --fDir input/example/*.tif --nSel 100
+    ```
+    
+    Images will be outputted to `/output/<your-directory-name>/`.

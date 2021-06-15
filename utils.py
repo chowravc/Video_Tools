@@ -1,4 +1,6 @@
+## Importing packages
 import numpy as np
+import shutil
 import cv2
 import glob
 import os
@@ -126,4 +128,86 @@ def framesToVideo(framesDir, framerate):
 				break
 
 		out.release()
+
 	print('\nDone.')
+
+## Select equally spaced frames
+def framesEqualSelect(framesDir, n):
+
+	print('\nLoading frames: ' + framesDir)
+
+	# Frames paths
+	fPath = glob.glob(framesDir)
+
+	# If no frames found
+	if len(fPath) == 0:
+
+		print('\nNo Frames were found.')
+
+	# If frames are found
+	else:
+
+		print('Found ' + str(len(fPath)) + ' frames.')
+
+		if len(fPath) < n:
+
+			print('\nThe number of frames to select (' + str(n) + ') is greater than the total number of frames (' + str(len(fPath)) + ').')
+			print('Exiting script.')
+			return
+
+		# If output directory does not exist
+		if len(glob.glob('output/')) == 0:
+
+			os.mkdir('./output/')
+
+		# Directory to output selected frames to
+		outDir = 'output/' + framesDir.split('/')[-2] + '/'
+
+		# If output does not exist, make it
+		if len(glob.glob(outDir)) == 0:
+
+			os.mkdir(outDir)
+
+		# If output has files inside already
+		if len(glob.glob(outDir + '/*')) > 0:
+
+			print('\nThere are already files in the output. Deleting them.')
+
+			for file in glob.glob(outDir + '/*'):
+
+				os.remove(file)
+
+		# Delta between frames
+		delta = len(fPath)/n
+
+		# Store how many frames have been copied
+		copied = 0
+
+		# float to help decide what frame to copy
+		copyVal = 0.0
+
+		# Copying over selected frames
+		while(copied < n):
+
+			# Showing progress
+			if copied%10 == 0:
+
+				print(str(100*copied/n)[:4] + '%')
+
+			# Source path of file
+			sourcePath = fPath[int(copyVal)]
+
+			# Destination path to copy file to
+			destPath = outDir + sourcePath.split('\\')[-1]
+
+			# Copying the file over
+			shutil.copyfile(sourcePath, destPath)
+
+			# Add one to number of files copied
+			copied += 1
+
+			# Add delta to determine next file
+			copyVal += delta
+
+		print('\nFinished copying ' + str(copied) + ' files.')
+		print('\nDone.')
